@@ -2,21 +2,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     // 0. DYNAMIC LIVE DATA HYDRATION
     // ==========================================
-    // Auto-migrate any cached old email in localStorage
-    let liveDataRaw = localStorage.getItem('sekar_portfolio_live_data');
-    if (liveDataRaw && liveDataRaw.includes('sekarsmarth444@gmail.com')) {
-        liveDataRaw = liveDataRaw.replaceAll('sekarsmarth444@gmail.com', 'sekarganesh2503@gmail.com');
-        localStorage.setItem('sekar_portfolio_live_data', liveDataRaw);
-    }
-
-    if (liveDataRaw) {
-        try {
-            const data = JSON.parse(liveDataRaw);
-            hydrateDOMWithLiveData(data);
-        } catch (e) {
-            console.error('Failed to parse live portfolio data:', e);
-        }
-    }
+    // Fetch global portfolio data config file (sekar_portfolio_data.json) for cross-device sync
+    fetch(`./sekar_portfolio_data.json?v=${Date.now()}`)
+        .then(res => {
+            if (res.ok) return res.json();
+            throw new Error('No remote JSON file');
+        })
+        .then(remoteData => {
+            if (remoteData) {
+                hydrateDOMWithLiveData(remoteData);
+                localStorage.setItem('sekar_portfolio_live_data', JSON.stringify(remoteData));
+            }
+        })
+        .catch(() => {
+            // Fallback to localStorage if offline
+            let liveDataRaw = localStorage.getItem('sekar_portfolio_live_data');
+            if (liveDataRaw && liveDataRaw.includes('sekarsmarth444@gmail.com')) {
+                liveDataRaw = liveDataRaw.replaceAll('sekarsmarth444@gmail.com', 'sekarganesh2503@gmail.com');
+                localStorage.setItem('sekar_portfolio_live_data', liveDataRaw);
+            }
+            if (liveDataRaw) {
+                try {
+                    const data = JSON.parse(liveDataRaw);
+                    hydrateDOMWithLiveData(data);
+                } catch (e) {
+                    console.error('Failed to parse live portfolio data:', e);
+                }
+            }
+        });
 
     function hydrateDOMWithLiveData(data) {
         if (!data) return;

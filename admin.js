@@ -513,6 +513,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------
+    // Export Global Data Config (sekar_portfolio_data.json) for Hosting Sync
+    // --------------------------------------------------
+    const exportGlobalJsonBtn = document.getElementById('exportGlobalJsonBtn');
+    if (exportGlobalJsonBtn) {
+        exportGlobalJsonBtn.addEventListener('click', () => {
+            gatherDataFromForm();
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "sekar_portfolio_data.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showAlert("Exported global config (sekar_portfolio_data.json)! Upload/commit this file to your hosting provider so all devices see your update.");
+        });
+    }
+
+    // --------------------------------------------------
     // Backup: Import Encrypted JSON
     // --------------------------------------------------
     const importBackupInput = document.getElementById('importBackupInput');
@@ -566,7 +584,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputHeroImg = document.getElementById('inputHeroImg');
 
     if (heroDragDropZone && heroFileInput) {
-        heroDragDropZone.addEventListener('click', () => heroFileInput.click());
+        // Prevent browser default window file opening on drop
+        window.addEventListener('dragover', (e) => e.preventDefault(), false);
+        window.addEventListener('drop', (e) => e.preventDefault(), false);
+
+        heroDragDropZone.addEventListener('click', (e) => {
+            if (e.target !== heroFileInput) {
+                heroFileInput.click();
+            }
+        });
 
         ['dragenter', 'dragover'].forEach(eventName => {
             heroDragDropZone.addEventListener(eventName, (e) => {
@@ -585,8 +611,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         heroDragDropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             const dt = e.dataTransfer;
-            const files = dt.files;
+            const files = dt ? dt.files : null;
             if (files && files.length > 0) {
                 handleHeroFileUpload(files[0]);
             }
@@ -599,8 +627,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         function handleHeroFileUpload(file) {
-            if (!file.type.startsWith('image/')) {
-                alert('Please upload an image file (PNG, JPG, WEBP).');
+            if (!file || !file.type.startsWith('image/')) {
+                alert('Please select or drop a valid image file (PNG, JPG, WEBP).');
                 return;
             }
 
