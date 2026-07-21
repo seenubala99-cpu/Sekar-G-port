@@ -52,21 +52,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 title: "Promotional Brand Video Campaign",
                 description: "End-to-end production including concept development, videography, editing, and motion graphics to enhance brand visibility.",
                 thumb: "images/cash_cow.jpg",
-                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                videoUrl: "https://www.image2url.com/r2/default/videos/1784548788723-7c016908-e513-4f89-ad75-44e4d64e6591.mp4",
                 tags: ["Videography", "Motion Graphics", "Branding"]
             },
             {
                 title: "Corporate Commercial Production",
                 description: "Complete commercial production workflow from storyboard to final delivery using Premiere Pro, After Effects, and DaVinci Resolve.",
                 thumb: "images/reel.jpg",
-                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                videoUrl: "https://www.image2url.com/r2/default/videos/1784549983984-1db76c15-c28a-44c3-9d0b-99824302991d.mp4",
                 tags: ["Premiere Pro", "DaVinci Resolve", "Color Grading"]
             },
             {
                 title: "Social Media Content Series",
                 description: "Created optimized Instagram Reels and YouTube Shorts using AI-assisted production techniques for greater audience engagement.",
                 thumb: "images/vlog.jpg",
-                videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+                videoUrl: "https://www.image2url.com/r2/default/videos/1784550866798-55c7b65b-470b-41af-b0f1-8b17135f11e8.mp4",
                 tags: ["AI Content", "Reels & Shorts", "Viral Growth"]
             }
         ],

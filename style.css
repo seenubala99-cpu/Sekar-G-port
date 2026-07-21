@@ -506,17 +506,24 @@ img {
     z-index: 2;
     width: 100%;
     max-width: 440px;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    overflow: visible;
+    border-radius: 24px;
+    overflow: hidden;
+    background: var(--liquid-bg);
+    backdrop-filter: var(--liquid-blur);
+    border: 1px solid var(--liquid-border);
+    box-shadow: var(--liquid-shadow);
+    transition: var(--transition-normal);
+}
+
+.image-frame:hover {
+    border-color: var(--liquid-border-hover);
+    box-shadow: var(--liquid-shadow-hover);
 }
 
 .hero-img {
     width: 100%;
     height: auto;
     display: block;
-    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 30px rgba(124, 0, 214, 0.45));
     transition: var(--transition-normal);
 }
 
